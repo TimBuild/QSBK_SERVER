@@ -3,22 +3,20 @@ package com.qiubai.entity;
 import java.util.Date;
 
 public class Character {
-	private String id;
-	private String userid;
+	private int id;
+	private int userid;
 	private String char_title;
 	private String char_context;
 	private String char_support;
 	private String char_oppose;
 	private String char_comment;
 	private Date char_time;
-	
-	
 
 	public Character() {
 		super();
 	}
 
-	public Character(String id, String userid, String char_title,
+	public Character(int id, int userid, String char_title,
 			String char_context, String char_support, String char_oppose,
 			String char_comment, Date char_time) {
 		super();
@@ -32,19 +30,19 @@ public class Character {
 		this.char_time = char_time;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getUserid() {
+	public int getUserid() {
 		return userid;
 	}
 
-	public void setUserid(String userid) {
+	public void setUserid(int userid) {
 		this.userid = userid;
 	}
 

@@ -1,5 +1,7 @@
 package com.qiubai.dao;
 
+import com.qiubai.entity.Character;
+
 public interface CharacterDao {
-	public boolean addCharacter(String id,String userid,String char_title);
+	public boolean addCharacter(Character character);
 }

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.apache.commons.dbutils.QueryRunner;
 
 import com.qiubai.dao.CharacterDao;
+import com.qiubai.entity.Character;
 import com.qiubai.tool.C3P0DBConnectionPool;
 import com.qiubai.tool.ReadProperties;
 
@@ -14,15 +15,16 @@ public class CharacterDaoImpl implements CharacterDao {
 	private QueryRunner queryRunner = new QueryRunner();
 
 	@Override
-	public boolean addCharacter(String id, String userid, String char_title) {
+	public boolean addCharacter(Character character) {
 		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
 
 		try {
 			conn.setAutoCommit(false);
 			int ret = -1;
 			ret = queryRunner.update(conn,
-					ReadProperties.read("sql", "addCharacter"), id, userid,
-					char_title);
+					ReadProperties.read("sql", "addCharacter"),
+					character.getUserid(), character.getChar_title(),
+					character.getChar_context(), character.getChar_time());
 			if (ret > 0) {
 				conn.commit();
 				return true;
