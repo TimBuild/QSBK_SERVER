@@ -2,6 +2,9 @@ package com.qiubai.entity;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Character {
 	private int id;
 	private int userid;

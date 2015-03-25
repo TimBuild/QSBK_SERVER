@@ -2,8 +2,11 @@ package com.qiubai.dao.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.qiubai.dao.CharacterDao;
 import com.qiubai.entity.Character;
@@ -48,6 +51,55 @@ public class CharacterDaoImpl implements CharacterDao {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean getCharacterByTitle(String char_title) {
+		Connection conn = (Connection)C3P0DBConnectionPool.getConnection();
+		Character character = null;
+		try {
+			character = queryRunner.query(conn,
+					ReadProperties.read("sql", "getCharacterByTitle"),
+					new BeanHandler<>(Character.class), char_title);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if(character!=null){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public List<Character> getCharacter() {
+		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
+		List<Character> characters = null;
+		try {
+
+			characters = queryRunner.query(conn,
+					ReadProperties.read("sql", "getAllCharacter"),
+					new BeanListHandler<>(Character.class));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return characters;
 	}
 
 }
