@@ -1,5 +1,6 @@
 package com.qiubai.server;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,12 +11,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.qiubai.entity.Character;
+import com.qiubai.tool.ParseDate;
 
 public class CharacterManager {
 	public List<Character> getByUrl(String url) {
 
 		List<Character> characters = new ArrayList<Character>();
 		Character character;
+		ParseDate parseDate = new ParseDate();
 		String parseHtml = ParseHtml.getHtmlContent(url, "utf-8");
 		Document doc = Jsoup.parse(parseHtml);
 		Elements contents = doc
@@ -42,7 +45,7 @@ public class CharacterManager {
 				character = new Character();
 				character.setChar_title(char_title.trim());
 				character.setChar_context(char_context.trim());
-				character.setChar_time(new Date());
+				character.setChar_time(parseDate.DateToString(new Date()));
 
 				characters.add(character);
 

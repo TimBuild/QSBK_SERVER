@@ -1,5 +1,8 @@
 package com.qiubai.test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import com.qiubai.dao.CharacterDao;
 import com.qiubai.dao.impl.CharacterDaoImpl;
 import com.qiubai.entity.Character;
 import com.qiubai.server.CharacterManager;
+import com.sun.jmx.snmp.Timestamp;
 
 public class TestCharacterDao {
 
@@ -25,7 +29,7 @@ public class TestCharacterDao {
 		System.out.println(addFlag);*/
 		
 		//加入到数据库中
-		/*CharacterManager cm = new CharacterManager();
+		CharacterManager cm = new CharacterManager();
 		List<Character> characters = cm.getByUrl("http://www.pengfu.com/xiaohua_1.html");
 		for(Character character:characters){
 			if(characterDao.getCharacterByTitle(character.getChar_title())){
@@ -33,11 +37,24 @@ public class TestCharacterDao {
 			}
 			
 			characterDao.addCharacter(character);
-		}*/
+		}
 		
 	//	System.out.println(characterDao.getCharacter("我aa"));
 		
-		System.out.println(characterDao.getCharacter().get(2).getChar_context());
+	//	System.out.println(characterDao.getCharacter().get(2).getChar_context());
+		/*Calendar c =Calendar.getInstance();
+		String pattern ="yyyy-MM-dd hh:mm:ss";
+		String str = new SimpleDateFormat(pattern).format(new Date());
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		System.out.println(str);
+		try {
+			Date date = sdf.parse(str);
+			System.out.println(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
 	}
 
 }

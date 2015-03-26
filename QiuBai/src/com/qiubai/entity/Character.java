@@ -13,7 +13,7 @@ public class Character {
 	private String char_support;
 	private String char_oppose;
 	private String char_comment;
-	private Date char_time;
+	private String char_time;
 
 	public Character() {
 		super();
@@ -21,7 +21,7 @@ public class Character {
 
 	public Character(int id, int userid, String char_title,
 			String char_context, String char_support, String char_oppose,
-			String char_comment, Date char_time) {
+			String char_comment, String char_time) {
 		super();
 		this.id = id;
 		this.userid = userid;
@@ -89,11 +89,11 @@ public class Character {
 		this.char_comment = char_comment;
 	}
 
-	public Date getChar_time() {
+	public String getChar_time() {
 		return char_time;
 	}
 
-	public void setChar_time(Date char_time) {
+	public void setChar_time(String char_time) {
 		this.char_time = char_time;
 	}
 
