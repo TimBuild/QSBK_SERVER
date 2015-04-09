@@ -60,4 +60,21 @@ public class CharacterService {
 		}
 		return "success";
 	}
+	
+	
+	@POST
+	@Path("/addCharacterSupportOppose")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String addCharacterSupportOppose(
+			@FormParam("id") String id,
+			@FormParam("support") String support,
+			@FormParam("oppose") String oppose) {
+		
+		boolean flag = characterDao.addCharacterSupport(Integer.parseInt(id), support, oppose);
+		if(flag==true){
+			return "true";
+		}
+		return "false";
+
+	}
 }

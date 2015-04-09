@@ -56,11 +56,11 @@ public class CharacterManager {
 
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		CharacterManager cm = new CharacterManager();
 		List<Character> ch = cm
 				.getByUrl("http://www.pengfu.com/xiaohua_1.html");
 		System.out.println(ch.get(1).getChar_context());
 
-	}
+	}*/
 }

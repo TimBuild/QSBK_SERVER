@@ -30,14 +30,16 @@ public class TestCharacterDao {
 		
 		//加入到数据库中
 		CharacterManager cm = new CharacterManager();
-		List<Character> characters = cm.getByUrl("http://www.pengfu.com/xiaohua_1.html");
+		/*List<Character> characters = cm.getByUrl("http://www.pengfu.com/xiaohua_1.html");
 		for(Character character:characters){
 			if(characterDao.getCharacterByTitle(character.getChar_title())){
 				return;
 			}
 			
 			characterDao.addCharacter(character);
-		}
+		}*/
+		
+		System.out.println(characterDao.addCharacterSupport(308,"3333", "3334"));
 		
 	//	System.out.println(characterDao.getCharacter("我aa"));
 		
