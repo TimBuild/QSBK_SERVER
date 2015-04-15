@@ -55,7 +55,7 @@ public class CharacterDaoImpl implements CharacterDao {
 
 	@Override
 	public boolean getCharacterByTitle(String char_title) {
-		Connection conn = (Connection)C3P0DBConnectionPool.getConnection();
+		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
 		Character character = null;
 		try {
 			character = queryRunner.query(conn,
@@ -63,7 +63,7 @@ public class CharacterDaoImpl implements CharacterDao {
 					new BeanHandler<>(Character.class), char_title);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			try {
 				if (conn != null) {
 					conn.close();
@@ -72,21 +72,21 @@ public class CharacterDaoImpl implements CharacterDao {
 				e.printStackTrace();
 			}
 		}
-		if(character!=null){
+		if (character != null) {
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public List<Character> getCharacter() {
+	public List<Character> getCharacter(int offsets, int rows) {
 		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
 		List<Character> characters = null;
 		try {
 
 			characters = queryRunner.query(conn,
 					ReadProperties.read("sql", "getAllCharacter"),
-					new BeanListHandler<>(Character.class));
+					new BeanListHandler<>(Character.class), offsets, rows);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -100,6 +100,41 @@ public class CharacterDaoImpl implements CharacterDao {
 			}
 		}
 		return characters;
+	}
+
+	@Override
+	public boolean addCharacterSupport(int id, String support, String tread) {
+		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
+
+		try {
+			conn.setAutoCommit(false);
+			int ret = -1;
+			ret = queryRunner.update(conn,
+					ReadProperties.read("sql", "addCharacterSupportTread"), support,
+					tread, id);
+			if (ret > 0) {
+				conn.commit();
+				return true;
+			} else {
+				conn.rollback();
+			}
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 
 }
