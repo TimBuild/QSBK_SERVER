@@ -1,5 +1,7 @@
 package com.qiubai.service;
 
+import java.util.UUID;
+
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -27,5 +29,14 @@ public class UserService {
 		System.out.println(password);
 
 		return "success";
+	}
+
+	@POST
+	@Path("/login")
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public String login(@FormParam("email") String email,
+			@FormParam("password") String password) {
+		String uuid = UUID.randomUUID().toString();
+		return uuid;
 	}
 }
