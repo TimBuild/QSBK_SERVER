@@ -1,5 +1,8 @@
 package com.qiubai.dao;
 
-public interface UserDao {
+import com.qiubai.entity.User;
 
+public interface UserDao {
+	
+	public User getUser(String userid);
 }

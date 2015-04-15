@@ -1,13 +1,11 @@
 package com.qiubai.entity;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Character {
 	private int id;
-	private int userid;
+	private String user_id;
 	private String char_title;
 	private String char_context;
 	private String char_support;
@@ -16,15 +14,14 @@ public class Character {
 	private String char_time;
 
 	public Character() {
-		super();
 	}
-
-	public Character(int id, int userid, String char_title,
+	
+	public Character(int id, String user_id, String char_title,
 			String char_context, String char_support, String char_oppose,
 			String char_comment, String char_time) {
 		super();
 		this.id = id;
-		this.userid = userid;
+		this.user_id = user_id;
 		this.char_title = char_title;
 		this.char_context = char_context;
 		this.char_support = char_support;
@@ -41,12 +38,12 @@ public class Character {
 		this.id = id;
 	}
 
-	public int getUserid() {
-		return userid;
+	public String getUser_id() {
+		return user_id;
 	}
 
-	public void setUserid(int userid) {
-		this.userid = userid;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getChar_title() {

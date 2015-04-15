@@ -2,15 +2,15 @@ package com.qiubai.entity;
 
 public class User {
 	
-	private String email;
+	private String userid;
 	private String nickname;
 	private String password;
-	private String headicon;
-	public String getEmail() {
-		return email;
+	private String icon;
+	public String getUserid() {
+		return userid;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 	public String getNickname() {
 		return nickname;
@@ -24,11 +24,13 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getHeadicon() {
-		return headicon;
+	public String getIcon() {
+		return icon;
 	}
-	public void setHeadicon(String headicon) {
-		this.headicon = headicon;
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
+	
+	
 	
 }
