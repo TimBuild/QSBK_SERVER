@@ -1,18 +1,10 @@
 package com.qiubai.test;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import org.junit.Test;
 
 import com.qiubai.dao.CharacterDao;
 import com.qiubai.dao.impl.CharacterDaoImpl;
-import com.qiubai.entity.Character;
 import com.qiubai.server.CharacterManager;
-import com.sun.jmx.snmp.Timestamp;
 
 public class TestCharacterDao {
 

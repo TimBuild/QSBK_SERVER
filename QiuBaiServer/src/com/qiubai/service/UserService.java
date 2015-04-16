@@ -40,6 +40,7 @@ public class UserService {
 				user.setUserid(email);
 				user.setNickname(nickname);
 				user.setPassword(password);
+				user.setIcon("null");
 				user.setToken(UUID.randomUUID().toString());
 				if(userDao.register(user)){
 					return "success";
