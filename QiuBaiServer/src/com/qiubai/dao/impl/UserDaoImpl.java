@@ -78,4 +78,22 @@ public class UserDaoImpl implements UserDao{
 		return user;
 	}
 
+	@Override
+	public User getUserIncludePassword(String userid) {
+		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
+		User user = null;
+		try {
+			user = runner.query(conn,  ReadProperties.read("sql", "getUserIncludePassword"), new BeanHandler<User>(User.class), userid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} try {
+			if(conn != null || !conn.isClosed()){
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+
 }

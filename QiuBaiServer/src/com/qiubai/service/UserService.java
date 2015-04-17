@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import com.qiubai.dao.UserDao;
 import com.qiubai.dao.impl.UserDaoImpl;
 import com.qiubai.entity.User;
+import com.qiubai.util.JavaMail;
 
 @Path("/UserService")
 public class UserService {
@@ -96,9 +97,20 @@ public class UserService {
 	@POST
 	@Path("/forgetPassword")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public String forgetPassword(@FormParam("email") String email){
-		if(verifyForgetPasswordInformation(email)){
-			return "success";
+	public String forgetPassword(@FormParam("userid") String userid){
+		if(verifyForgetPasswordInformation(userid)){
+			User user = userDao.getUserIncludePassword(userid);
+			if(user != null){
+				JavaMail javaMail = new JavaMail();
+				if(javaMail.sendEmail("糗事百科", "糗事百科" + "<br/>尊敬的：" + user.getNickname() + 
+						"<br/>您的密码为：" + user.getPassword() + "<br/>请立即登录糗百手机客户端修改密码。", user.getUserid())){
+					return "success";
+				} else {
+					return "fail";
+				}
+			} else {
+				return "fail";
+			}
 		} else {
 			return "fail";
 		}

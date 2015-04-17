@@ -28,4 +28,11 @@ public interface UserDao {
 	 * @return
 	 */
 	public boolean register(User user);
+	
+	/**
+	 * get user include password
+	 * @param userid
+	 * @return
+	 */
+	public User getUserIncludePassword(String userid);
 }
