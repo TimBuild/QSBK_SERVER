@@ -1,15 +1,13 @@
 package com.qiubai.tool;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class ParseDate {
 
 	public static String getCurrentTime(String format) {
-		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
-		String currentTime = sdf.format(date);
+		String currentTime = sdf.format(System.currentTimeMillis());
 		return currentTime;
 	}
 
@@ -20,4 +18,5 @@ public class ParseDate {
 		String format = "yyyy-MM-dd HH:mm:ss";
 		return getCurrentTime(format);
 	}
+	
 }

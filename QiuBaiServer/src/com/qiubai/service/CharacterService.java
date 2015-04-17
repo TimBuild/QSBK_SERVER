@@ -39,12 +39,13 @@ public class CharacterService {
 
 	}
 
+	//暂时把增加消息方法给注释
 	/**
 	 * 定时的从网站上读数据，往数据库中添加
 	 * 
 	 * @return
 	 */
-	@GET
+/*	@GET
 	@Path("/addCharacter")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String addCharacter() {
@@ -60,7 +61,7 @@ public class CharacterService {
 			}
 		}
 		return "success";
-	}
+	}*/
 
 	@POST
 	@Path("/addCharacterSupportOppose")
