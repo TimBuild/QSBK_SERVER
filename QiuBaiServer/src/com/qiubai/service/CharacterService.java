@@ -22,6 +22,7 @@ public class CharacterService {
 
 	/**
 	 * 通过limit语句从数据库中获取所有的数据
+	 * 
 	 * @param offset
 	 * @param rows
 	 * @return
@@ -54,24 +55,23 @@ public class CharacterService {
 		for (Character character : characters) {
 			if (characterDao.getCharacterByTitle(character.getChar_title())) {
 				return "Exist";
+			} else {
+				characterDao.addCharacter(character);
 			}
-
-			characterDao.addCharacter(character);
 		}
 		return "success";
 	}
-	
-	
+
 	@POST
 	@Path("/addCharacterSupportOppose")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String addCharacterSupportOppose(
-			@FormParam("id") String id,
+	public String addCharacterSupportOppose(@FormParam("id") String id,
 			@FormParam("support") String support,
 			@FormParam("oppose") String oppose) {
-		
-		boolean flag = characterDao.addCharacterSupport(Integer.parseInt(id), support, oppose);
-		if(flag==true){
+
+		boolean flag = characterDao.addCharacterSupport(Integer.parseInt(id),
+				support, oppose);
+		if (flag == true) {
 			return "true";
 		}
 		return "false";

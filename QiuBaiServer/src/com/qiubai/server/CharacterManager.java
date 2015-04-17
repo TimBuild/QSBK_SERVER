@@ -17,7 +17,6 @@ public class CharacterManager {
 
 		List<Character> characters = new ArrayList<Character>();
 		Character character;
-		ParseDate parseDate = new ParseDate();
 		String parseHtml = ParseHtml.getHtmlContent(url, "utf-8");
 		Document doc = Jsoup.parse(parseHtml);
 		Elements contents = doc
@@ -38,13 +37,11 @@ public class CharacterManager {
 
 			if (!char_context.startsWith("@")) {
 				char_context = char_context.replace("@捧腹网", "");
-//				System.out.println(char_title);
-//				System.out.println(char_context);
-//				System.out.println("---------------------------");
 				character = new Character();
+				character.setUserid("qiubaiadmin@163.com");
 				character.setChar_title(char_title.trim());
 				character.setChar_context(char_context.trim());
-				character.setChar_time(parseDate.DateToString(new Date()));
+				character.setChar_time(ParseDate.getCurrentTime());
 
 				characters.add(character);
 
@@ -55,11 +52,4 @@ public class CharacterManager {
 
 	}
 
-	/*public static void main(String[] args) {
-		CharacterManager cm = new CharacterManager();
-		List<Character> ch = cm
-				.getByUrl("http://www.pengfu.com/xiaohua_1.html");
-		System.out.println(ch.get(1).getChar_context());
-
-	}*/
 }
