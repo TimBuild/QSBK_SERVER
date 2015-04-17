@@ -26,7 +26,7 @@ public class CharacterDaoImpl implements CharacterDao {
 			int ret = -1;
 			ret = queryRunner.update(conn,
 					ReadProperties.read("sql", "addCharacter"),
-					character.getUser_id(), character.getChar_title(),
+					character.getUserid(), character.getChar_title(),
 					character.getChar_context(), character.getChar_time());
 			if (ret > 0) {
 				conn.commit();

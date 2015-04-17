@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Character {
 	private int id;
-	private String user_id;
+	private String userid;
 	private String char_title;
 	private String char_context;
 	private String char_support;
@@ -15,13 +15,13 @@ public class Character {
 
 	public Character() {
 	}
-	
-	public Character(int id, String user_id, String char_title,
+
+	public Character(int id, String userid, String char_title,
 			String char_context, String char_support, String char_oppose,
 			String char_comment, String char_time) {
 		super();
 		this.id = id;
-		this.user_id = user_id;
+		this.userid = userid;
 		this.char_title = char_title;
 		this.char_context = char_context;
 		this.char_support = char_support;
@@ -38,12 +38,12 @@ public class Character {
 		this.id = id;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 	public String getChar_title() {

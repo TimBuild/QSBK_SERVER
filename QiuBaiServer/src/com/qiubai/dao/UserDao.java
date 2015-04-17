@@ -3,8 +3,29 @@ package com.qiubai.dao;
 import com.qiubai.entity.User;
 
 public interface UserDao {
-	
+
+	/**
+	 * user login
+	 * 
+	 * @param userid
+	 * @param password
+	 * @return
+	 */
 	public User login(String userid, String password);
+
+	/**
+	 * get user via userid
+	 * 
+	 * @param userid
+	 * @return
+	 */
 	public User getUser(String userid);
+
+	/**
+	 * use register
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public boolean register(User user);
 }

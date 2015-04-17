@@ -71,10 +71,10 @@ public class UserService {
 	@POST
 	@Path("/login")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public User login(@FormParam("email") String email,
+	public User login(@FormParam("userid") String userid,
 			@FormParam("password") String password) {
-		if(verifyLoginInformation(email, password)){
-			return userDao.login(email, password);
+		if(verifyLoginInformation(userid, password)){
+			return userDao.login(userid, password);
 		} else {
 			return null;
 		}
