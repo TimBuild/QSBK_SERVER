@@ -17,6 +17,7 @@ import com.qiubai.dao.impl.UserDaoImpl;
 import com.qiubai.entity.Comment;
 import com.qiubai.entity.CommentWithUser;
 import com.qiubai.entity.User;
+import com.qiubai.tool.VerifyInformationTool;
 
 @Path("CommentService")
 public class CommentService {
@@ -24,6 +25,14 @@ public class CommentService {
 	private UserDao userDao = new UserDaoImpl();
 	private CommentDao commentDao = new CommentDaoImpl();
 	
+	/**
+	 * add comment
+	 * @param token
+	 * @param newsid
+	 * @param userid
+	 * @param content
+	 * @return
+	 */
 	@POST
 	@Path("/addComment/{token}")
 	@Produces({ MediaType.TEXT_PLAIN })
@@ -31,8 +40,7 @@ public class CommentService {
 			@FormParam("newsid") String newsid, 
 			@FormParam("userid") String userid,
 			@FormParam("content") String content){
-		System.out.println("ok");
-		if(verifyCommentInformation(token, newsid, userid, content)){
+		if(VerifyInformationTool.verifyCommentInformation(token, newsid, userid, content)){
 			User user = userDao.getUser(userid);
 			if( token.equals(user.getToken()) ){
 				return "fail";
@@ -55,16 +63,13 @@ public class CommentService {
 		}
 	}
 	
-	public boolean verifyCommentInformation(String token, String newsid, String userid, String content){
-		if("".equals(token.trim()) || "".equals(newsid.trim()) || "".equals(userid.trim()) || "".equals(content.trim())){
-			return false;
-		} else if (content.trim().length() > 500){
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
+	/**
+	 * get comments
+	 * @param newsid
+	 * @param offset
+	 * @param length
+	 * @return
+	 */
 	@POST
 	@Path("/getComments")
 	@Produces({ MediaType.APPLICATION_JSON })
