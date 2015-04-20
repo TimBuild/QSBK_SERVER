@@ -1,8 +1,6 @@
 package com.qiubai.service;
 
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
