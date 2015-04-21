@@ -54,4 +54,13 @@ public class VerifyInformationTool {
 		}
 	}
 	
+	public static boolean verifyChangeNicknameInformation(String userid, String token, String nickname){
+		if("".equals(token.trim()) || "".equals(userid) || "".equals(nickname)){
+			return false;
+		} else if(nickname.trim().length() < 3 || nickname.trim().length() > 10){
+			return false;
+		}
+		return true;
+	}
+	
 }

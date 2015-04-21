@@ -96,4 +96,19 @@ public class UserDaoImpl implements UserDao{
 		return user;
 	}
 
+	@Override
+	public boolean changeNickname(String userid, String nickname) {
+		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
+		Object param[] = {nickname, userid}; 
+		try {
+			int result = runner.update(conn, ReadProperties.read("sql", "changeNickname"), param);
+			if(result > 0){
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

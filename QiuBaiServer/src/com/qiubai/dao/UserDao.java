@@ -35,4 +35,12 @@ public interface UserDao {
 	 * @return
 	 */
 	public User getUserIncludePassword(String userid);
+	
+	/**
+	 * change nickname
+	 * @param userid
+	 * @param nickname
+	 * @return true: success; false: fail
+	 */
+	public boolean changeNickname(String userid, String nickname);
 }

@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -38,7 +39,7 @@ public class UserService {
 			} else {
 				User user = new User();
 				user.setUserid(email);
-				user.setNickname(nickname);
+				user.setNickname(nickname.trim());
 				user.setPassword(password);
 				user.setIcon("null");
 				user.setToken(UUID.randomUUID().toString());
@@ -98,4 +99,44 @@ public class UserService {
 		}
 	}
 	
+	
+	/**
+	 * change nickname
+	 * @param token
+	 * @param userid
+	 * @param nickname
+	 * @return
+	 */
+	@POST
+	@Path("/changeNickname/{token}")
+	@Produces({ MediaType.TEXT_PLAIN})
+	public String changeNickname(@PathParam("token") String token,
+			@FormParam("userid") String userid,
+			@FormParam("nickname") String nickname){
+		if(VerifyInformationTool.verifyChangeNicknameInformation(userid, token, nickname)){
+			User user = userDao.getUser(userid);
+			if(user == null){
+				return "fail";
+			} else if( !token.equals(user.getToken()) ){
+				return "fail";
+			} else {
+				if(userDao.changeNickname(userid, nickname.trim())){
+					return "success";
+				} else {
+					return "fail";
+				}
+			}
+		} else {
+			return "fail";
+		}
+	}
+	
+	@POST
+	@Path("/changePassword/{token}")
+	@Produces({ MediaType.TEXT_PLAIN })
+	public String changePassword(@PathParam("token") String token,
+			@FormParam("userid") String userid,
+			@FormParam("password") String password){
+		return null;
+	}
 }
