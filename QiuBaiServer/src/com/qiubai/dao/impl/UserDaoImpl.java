@@ -111,4 +111,19 @@ public class UserDaoImpl implements UserDao{
 		return false;
 	}
 
+	@Override
+	public boolean changePassword(String userid, String password) {
+		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
+		Object param[] = {password, userid};
+		try {
+			int result = runner.update(conn, ReadProperties.read("sql", "changePassword"), param);
+			if(result > 0){
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

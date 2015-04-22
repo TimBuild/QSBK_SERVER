@@ -131,6 +131,13 @@ public class UserService {
 		}
 	}
 	
+	/**
+	 * change password
+	 * @param token
+	 * @param userid
+	 * @param password
+	 * @return
+	 */
 	@POST
 	@Path("/changePassword/{token}")
 	@Produces({ MediaType.TEXT_PLAIN })
