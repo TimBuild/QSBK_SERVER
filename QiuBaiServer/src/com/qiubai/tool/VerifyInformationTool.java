@@ -54,10 +54,29 @@ public class VerifyInformationTool {
 		}
 	}
 	
+	public static boolean verifyChangePasswordInformation(String userid, String token, String originPassword, String newPassword){
+		if("".equals(token.trim()) || "".equals(userid) || "".equals(originPassword) || "".equals(newPassword)){
+			return false;
+		} else if(originPassword.length() < 6 || originPassword.length() > 20){
+			return false;
+		} else if(newPassword.length() < 6 || newPassword.length() > 20){
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	public static boolean verifyChangeNicknameInformation(String userid, String token, String nickname){
 		if("".equals(token.trim()) || "".equals(userid) || "".equals(nickname)){
 			return false;
 		} else if(nickname.trim().length() < 3 || nickname.trim().length() > 10){
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean verifyUploadIconInformation(String token, String userid){
+		if("".equals(token.trim()) || "".equals(userid)){
 			return false;
 		}
 		return true;

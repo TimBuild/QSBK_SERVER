@@ -2,11 +2,15 @@ package com.qiubai.service;
 
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import com.qiubai.dao.UserDao;
@@ -14,6 +18,7 @@ import com.qiubai.dao.impl.UserDaoImpl;
 import com.qiubai.entity.User;
 import com.qiubai.tool.VerifyInformationTool;
 import com.qiubai.util.JavaMail;
+import com.qiubai.util.SystemUtil;
 
 @Path("/UserService")
 public class UserService {
@@ -114,21 +119,16 @@ public class UserService {
 			@FormParam("userid") String userid,
 			@FormParam("nickname") String nickname){
 		if(VerifyInformationTool.verifyChangeNicknameInformation(userid, token, nickname)){
-			User user = userDao.getUser(userid);
-			if(user == null){
-				return "fail";
-			} else if( !token.equals(user.getToken()) ){
-				return "fail";
-			} else {
-				if(userDao.changeNickname(userid, nickname.trim())){
-					return "success";
-				} else {
-					return "fail";
+			User user = userDao.getUserIncludeToken(userid);
+			if(user != null){
+				if( token.equals(user.getToken()) ){
+					if(userDao.changeNickname(userid, nickname.trim())){
+						return "success";
+					}
 				}
 			}
-		} else {
-			return "fail";
 		}
+		return "fail";
 	}
 	
 	/**
@@ -143,7 +143,51 @@ public class UserService {
 	@Produces({ MediaType.TEXT_PLAIN })
 	public String changePassword(@PathParam("token") String token,
 			@FormParam("userid") String userid,
-			@FormParam("password") String password){
-		return null;
+			@FormParam("originPassword") String originPassword,
+			@FormParam("newPassword") String newPassword){
+		if(VerifyInformationTool.verifyChangePasswordInformation(userid, token, originPassword, newPassword)){
+			User user = userDao.getUserIncludePassword(userid);
+			if(user != null){
+				if(token.equals(user.getToken()) || originPassword.equals(user.getPassword())){
+					if(userDao.changePassword(userid, newPassword)){
+						return "success";
+					}
+				}
+			}
+		}
+		return "fail";
+	}
+	
+	/**
+	 * upload user header
+	 * @param token
+	 * @param userid
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@POST
+	@Path("/uploadIcon/{token}/{userid}")
+	@Consumes({ MediaType.MULTIPART_FORM_DATA })
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public String uploadIcon(
+			@PathParam("token") String token,
+			@PathParam("userid") String userid, 
+			@Context HttpServletRequest request, 
+			@Context HttpServletResponse response) {
+		if(VerifyInformationTool.verifyUploadIconInformation(token, userid)){
+			User user = userDao.getUserIncludeToken(userid);
+			if(user != null){
+				if(token.equals(user.getToken())){
+					String path = SystemUtil.uploadIcon(userid, request);
+					if(path != null){
+						if( userDao.addUserIcon(userid, path) ){
+							return "success";
+						}
+					}
+				}
+			}
+		}
+		return "fail";
 	}
 }
