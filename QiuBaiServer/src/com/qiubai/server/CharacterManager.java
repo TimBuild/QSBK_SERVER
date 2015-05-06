@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.qiubai.entity.Character;
-import com.qiubai.tool.ParseDate;
+import com.qiubai.tool.DateUtils;
 
 public class CharacterManager {
 	public List<Character> getByUrl(String url) {
@@ -41,7 +41,7 @@ public class CharacterManager {
 				character.setUserid("qiubaiadmin@163.com");
 				character.setChar_title(char_title.trim());
 				character.setChar_context(char_context.trim());
-				character.setChar_time(ParseDate.getCurrentTime());
+				character.setChar_time(DateUtils.getCurrentTime());
 
 				characters.add(character);
 

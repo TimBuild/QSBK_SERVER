@@ -45,7 +45,7 @@ public class CharacterService {
 	 * 
 	 * @return
 	 */
-/*	@GET
+	@GET
 	@Path("/addCharacter")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String addCharacter() {
@@ -61,7 +61,7 @@ public class CharacterService {
 			}
 		}
 		return "success";
-	}*/
+	}
 
 	@POST
 	@Path("/addCharacterSupportOppose")
