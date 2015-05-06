@@ -1,18 +1,24 @@
 package com.qiubai.service;
 
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import com.qiubai.dao.UserDao;
 import com.qiubai.dao.impl.UserDaoImpl;
 import com.qiubai.entity.User;
+import com.qiubai.tool.VerifyInformationTool;
+import com.qiubai.util.JavaMail;
+import com.qiubai.util.SystemUtil;
 
 @Path("/UserService")
 public class UserService {
@@ -32,13 +38,13 @@ public class UserService {
 	public String register(@FormParam("email") String email,
 			@FormParam("nickname") String nickname,
 			@FormParam("password") String password) {
-		if(verifyRegisterInformation(email, nickname, password)){
+		if(VerifyInformationTool.verifyRegisterInformation(email, nickname, password)){
 			if(userDao.getUser(email) != null){
 				return "exist";
 			} else {
 				User user = new User();
 				user.setUserid(email);
-				user.setNickname(nickname);
+				user.setNickname(nickname.trim());
 				user.setPassword(password);
 				user.setIcon("null");
 				user.setToken(UUID.randomUUID().toString());
@@ -53,66 +59,135 @@ public class UserService {
 		}
 	}
 	
-	public boolean verifyRegisterInformation(String email, String nickname, String password){
-		String regex = "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\\.[a-zA-Z0-9_-]{2,3}){1,2})$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(email);
-		if("".equals(email.trim()) || !matcher.matches()){
-			return false;
-		} else if("".equals(nickname.trim()) || nickname.trim().length() > 10 || nickname.trim().length() < 3) {
-			return false;
-		} else if("".equals(password) || password.length() > 20 || password.length() < 6){
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
+	/**
+	 * login
+	 * @param userid
+	 * @param password
+	 * @return
+	 */
 	@POST
 	@Path("/login")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public User login(@FormParam("userid") String userid,
 			@FormParam("password") String password) {
-		if(verifyLoginInformation(userid, password)){
+		if(VerifyInformationTool.verifyLoginInformation(userid, password)){
 			return userDao.login(userid, password);
 		} else {
 			return null;
 		}
 	}
 	
-	public boolean verifyLoginInformation(String email, String password){
-		String regex = "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\\.[a-zA-Z0-9_-]{2,3}){1,2})$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(email);
-		if("".equals(email.trim()) || !matcher.matches()){
-			return false;
-		} else if("".equals(password)) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
+	/**
+	 * forget password
+	 * @param userid
+	 * @return
+	 */
 	@POST
 	@Path("/forgetPassword")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public String forgetPassword(@FormParam("email") String email){
-		if(verifyForgetPasswordInformation(email)){
-			return "success";
+	public String forgetPassword(@FormParam("userid") String userid){
+		if(VerifyInformationTool.verifyForgetPasswordInformation(userid)){
+			User user = userDao.getUserIncludePassword(userid);
+			if(user != null){
+				JavaMail javaMail = new JavaMail();
+				if(javaMail.sendEmail("糗事百科", "糗事百科" + "<br/>尊敬的：" + user.getNickname() + 
+						"<br/>您的密码为：" + user.getPassword() + "<br/>请立即登录糗百手机客户端修改密码。", user.getUserid())){
+					return "success";
+				} else {
+					return "fail";
+				}
+			} else {
+				return "fail";
+			}
 		} else {
 			return "fail";
 		}
 	}
 	
-	public boolean verifyForgetPasswordInformation(String email){
-		String regex = "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\\.[a-zA-Z0-9_-]{2,3}){1,2})$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(email);
-		if("".equals(email.trim()) || !matcher.matches()){
-			return false;
-		} else {
-			return true;
+	
+	/**
+	 * change nickname
+	 * @param token
+	 * @param userid
+	 * @param nickname
+	 * @return
+	 */
+	@POST
+	@Path("/changeNickname/{token}")
+	@Produces({ MediaType.TEXT_PLAIN})
+	public String changeNickname(@PathParam("token") String token,
+			@FormParam("userid") String userid,
+			@FormParam("nickname") String nickname){
+		if(VerifyInformationTool.verifyChangeNicknameInformation(userid, token, nickname)){
+			User user = userDao.getUserIncludeToken(userid);
+			if(user != null){
+				if( token.equals(user.getToken()) ){
+					if(userDao.changeNickname(userid, nickname.trim())){
+						return "success";
+					}
+				}
+			}
 		}
+		return "fail";
 	}
 	
+	/**
+	 * change password
+	 * @param token
+	 * @param userid
+	 * @param password
+	 * @return
+	 */
+	@POST
+	@Path("/changePassword/{token}")
+	@Produces({ MediaType.TEXT_PLAIN })
+	public String changePassword(@PathParam("token") String token,
+			@FormParam("userid") String userid,
+			@FormParam("originPassword") String originPassword,
+			@FormParam("newPassword") String newPassword){
+		if(VerifyInformationTool.verifyChangePasswordInformation(userid, token, originPassword, newPassword)){
+			User user = userDao.getUserIncludePassword(userid);
+			if(user != null){
+				if(token.equals(user.getToken()) || originPassword.equals(user.getPassword())){
+					if(userDao.changePassword(userid, newPassword)){
+						return "success";
+					}
+				}
+			}
+		}
+		return "fail";
+	}
+	
+	/**
+	 * upload user header
+	 * @param token
+	 * @param userid
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@POST
+	@Path("/uploadIcon/{token}/{userid}")
+	@Consumes({ MediaType.MULTIPART_FORM_DATA })
+	@Produces(value = MediaType.TEXT_PLAIN)
+	public String uploadIcon(
+			@PathParam("token") String token,
+			@PathParam("userid") String userid, 
+			@Context HttpServletRequest request, 
+			@Context HttpServletResponse response) {
+		if(VerifyInformationTool.verifyUploadIconInformation(token, userid)){
+			User user = userDao.getUserIncludeToken(userid);
+			if(user != null){
+				if(token.equals(user.getToken())){
+					String path = SystemUtil.uploadIcon(userid, request);
+					if(path != null){
+						if( userDao.addUserIcon(userid, path) ){
+							return "success";
+						}
+					}
+				}
+			}
+		}
+		return "fail";
+	}
 }
