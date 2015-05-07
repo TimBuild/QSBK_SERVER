@@ -10,12 +10,13 @@ import org.jsoup.select.Elements;
 
 import com.qiubai.entity.Picture;
 import com.qiubai.tool.DateUtils;
+import com.qiubai.tool.ReadProperties;
 
 public class PictureManager {
 	public List<Picture> getPictureByUrl(String url){
 		List<Picture> pictures = new ArrayList<Picture>();
 		Picture picture;
-		String webUrl = "http://www.u148.net";
+		String webUrl = ReadProperties.read("website", "picture_url");
 		String parseHtml = ParseHtml.getHtmlContent(url, "utf-8");
 		
 		Document doc = Jsoup.parse(parseHtml);

@@ -23,7 +23,7 @@ public class PictureService {
 	 * 先增加Picture
 	 * @return
 	 */
-	@GET
+	/*@GET
 	@Path("/addPicture")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String addPicture() {
@@ -31,7 +31,7 @@ public class PictureService {
 		PictureDao pictureDao = new PictureDaoImpl();
 
 		PictureManager pictureManager = new PictureManager();
-		String url = "http://www.u148.net/image/2";
+		String url = "http://www.u148.net/image/1";
 		List<Picture> lists = pictureManager.getPictureByUrl(url);
 
 		for (Picture picture : lists) {
@@ -44,12 +44,12 @@ public class PictureService {
 
 		return "success";
 	}
-
+*/
 	/**
 	 * 然后再增加PictureDetail
 	 * @return
 	 */
-	@GET
+	/*@GET
 	@Path("/addPictureDetail")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String addPictureDetail() {
@@ -57,6 +57,7 @@ public class PictureService {
 		PictureDetailManager pictureDetailManager = new PictureDetailManager();
 		PictureDetailDao pictureDetailDao = new PictureDetailDaoImpl();
 		List<Picture> pictures = pictureDao.getAllPicture();
+		
 		for (Picture picture : pictures) {
 			String pic_url = picture.getPic_extra();
 			if (pic_url != null) {
@@ -72,5 +73,5 @@ public class PictureService {
 		}
 
 		return "success";
-	}
+	}*/
 }
