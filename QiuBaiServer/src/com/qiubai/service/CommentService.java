@@ -41,7 +41,7 @@ public class CommentService {
 			@FormParam("userid") String userid,
 			@FormParam("content") String content){
 		if(VerifyInformationTool.verifyCommentInformation(token, newsid, userid, content)){
-			User user = userDao.getUser(userid);
+			User user = userDao.getUserIncludeToken(userid);
 			if( user == null){
 				return "fail";
 			} else if( !token.equals(user.getToken()) ){
