@@ -26,4 +26,19 @@ public interface PictureDao {
 	 * @return
 	 */
 	public boolean getPictureByTitle(String pic_title);
+	
+	/**
+	 * 通过id找所有的数据
+	 * @param id
+	 * @return
+	 */
+	public Picture getPictureById(int id);
+	
+	/**
+	 * 通过limit来查询所有的picture信息
+	 * @param offset
+	 * @param rows
+	 * @return
+	 */
+	public List<Picture> getLimitPicture(int offset,int rows);
 }

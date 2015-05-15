@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Picture {
 
 	private int id;
-	private String user_id;
+	private String userid;
 	private String pic_title;
 	private String pic_time;
 	private String pic_extra;
@@ -19,7 +19,7 @@ public class Picture {
 			String pic_extra) {
 		super();
 		this.id = id;
-		this.user_id = user_id;
+		this.userid = user_id;
 		this.pic_title = pic_title;
 		this.pic_time = pic_time;
 		this.pic_extra = pic_extra;
@@ -33,12 +33,12 @@ public class Picture {
 		this.id = id;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 	public String getPic_title() {
@@ -63,6 +63,13 @@ public class Picture {
 
 	public void setPic_extra(String pic_extra) {
 		this.pic_extra = pic_extra;
+	}
+
+	@Override
+	public String toString() {
+		return "Picture [id=" + id + ", userid=" + userid + ", pic_title="
+				+ pic_title + ", pic_time=" + pic_time + ", pic_extra="
+				+ pic_extra + "]";
 	}
 
 }

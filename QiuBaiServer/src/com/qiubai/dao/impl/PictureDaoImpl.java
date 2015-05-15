@@ -27,7 +27,7 @@ public class PictureDaoImpl implements PictureDao {
 			int ret = -1;
 			ret = queryRunner.update(conn,
 					ReadProperties.read("sql", "addPicture"), picture.getId(),
-					picture.getUser_id(), picture.getPic_title(),
+					picture.getUserid(), picture.getPic_title(),
 					picture.getPic_time(),picture.getPic_extra());
 			if (ret > 0) {
 				conn.commit();
@@ -101,6 +101,54 @@ public class PictureDaoImpl implements PictureDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Picture> getLimitPicture(int offset, int rows) {
+		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
+		List<Picture> pictures = null;
+		try {
+
+			pictures = queryRunner.query(conn,
+					ReadProperties.read("sql", "getLimitPicture"),
+					new BeanListHandler<>(Picture.class), offset, rows);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return pictures;
+	}
+
+	@Override
+	public Picture getPictureById(int id) {
+		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
+		Picture pictures = null;
+		try {
+
+			pictures = queryRunner.query(conn,
+					ReadProperties.read("sql", "getPictureById"),
+					new BeanHandler<>(Picture.class),id);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return pictures;
 	}
 
 }

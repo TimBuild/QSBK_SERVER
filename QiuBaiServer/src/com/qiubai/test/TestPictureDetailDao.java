@@ -24,7 +24,7 @@ public class TestPictureDetailDao {
 		PictureDetailDao pictureDetailDao = new PictureDetailDaoImpl();
 //		System.out.println(pictureDetailDao.addPictureDetail(pictureDetail));
 		
-		PictureDao pictureDao = new PictureDaoImpl();
+		/*PictureDao pictureDao = new PictureDaoImpl();
 		PictureDetailManager pictureDetailManager = new PictureDetailManager();
 		List<Picture> pictures = pictureDao.getAllPicture();
 		for(Picture picture:pictures){
@@ -38,7 +38,20 @@ public class TestPictureDetailDao {
 //					System.out.println(id+"-->"+flag);
 				}
 			}
-		}
+		}*/
+		
+		/*List<PictureDetail> lists = pictureDetailDao.getPictureDetailsByid(14);
+		for(PictureDetail pictureDetail:lists){
+			System.out.println(pictureDetail.toString());
+			System.out.println("-------");
+		}*/
+	}
+	
+	@Test
+	public void test1(){
+		PictureDetailDao pictureDetailDao = new PictureDetailDaoImpl();
+		List<PictureDetail> picDetails = pictureDetailDao.getPictureDetailsByid(31);
+		System.out.println(picDetails.toString()+picDetails.size());
 	}
 
 }

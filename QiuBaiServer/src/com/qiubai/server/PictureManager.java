@@ -40,7 +40,7 @@ public class PictureManager {
 				String pic_extra = webUrl+href_pic3;
 				
 				
-				picture.setUser_id("qiubaiadmin@163.com");
+				picture.setUserid("qiubaiadmin@163.com");
 				picture.setPic_title(img_title);
 				picture.setPic_time(pic_time);
 				picture.setPic_extra(pic_extra);

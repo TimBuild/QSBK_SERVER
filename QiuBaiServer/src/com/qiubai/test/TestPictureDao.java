@@ -33,6 +33,21 @@ public class TestPictureDao {
 		
 //		System.out.println(pictureDao.getAllPicture().size());
 //		System.out.println(pictureDao.getPictureByTitle("豆瓣多牛人，电影剧照下的神回复（下"));
+		
+		List<Picture> lists = pictureDao.getLimitPicture(0, 5);
+//		List<Picture> lists = pictureDao.getAllPicture();
+		for(Picture picture:lists){
+			System.out.println(picture.toString());
+			System.out.println(picture.getUserid());
+			System.out.println("--------");
+		}
+	}
+	
+	@Test
+	public void test1(){
+		PictureDao pictureDao = new PictureDaoImpl();
+		Picture picture = pictureDao.getPictureById(111);
+		System.out.println(picture);
 	}
 
 }

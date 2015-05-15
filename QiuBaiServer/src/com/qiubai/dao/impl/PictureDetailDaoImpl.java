@@ -2,9 +2,11 @@ package com.qiubai.dao.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.qiubai.dao.PictureDetailDao;
 import com.qiubai.entity.Picture;
@@ -76,6 +78,30 @@ public class PictureDetailDaoImpl implements PictureDetailDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<PictureDetail> getPictureDetailsByid(int id) {
+		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
+		List<PictureDetail> pictureDetails = null;
+		try {
+
+			pictureDetails = queryRunner.query(conn,
+					ReadProperties.read("sql", "getPictureDetailById"),
+					new BeanListHandler<>(PictureDetail.class), id);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return pictureDetails;
 	}
 
 }

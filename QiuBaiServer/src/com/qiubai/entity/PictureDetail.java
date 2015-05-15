@@ -55,4 +55,13 @@ public class PictureDetail {
 		this.pic_describe = pic_describe;
 	}
 
+	@Override
+	public String toString() {
+		return "PictureDetail [pic_id=" + pic_id + ", id=" + id
+				+ ", pic_address=" + pic_address + ", pic_describe="
+				+ pic_describe + "]";
+	}
+	
+	
+
 }
