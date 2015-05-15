@@ -46,7 +46,7 @@ public class UserService {
 				user.setUserid(email);
 				user.setNickname(nickname.trim());
 				user.setPassword(password);
-				user.setIcon("null");
+				user.setIcon("default");
 				user.setToken(UUID.randomUUID().toString());
 				if(userDao.register(user)){
 					return "success";
@@ -179,7 +179,7 @@ public class UserService {
 			User user = userDao.getUserIncludeToken(userid);
 			if(user != null){
 				if(token.equals(user.getToken())){
-					String path = SystemUtil.uploadIcon(userid, request);
+					String path = SystemUtil.changePath(SystemUtil.uploadIcon(userid, request), request);
 					if(path != null){
 						if( userDao.addUserIcon(userid, path) ){
 							return "success";

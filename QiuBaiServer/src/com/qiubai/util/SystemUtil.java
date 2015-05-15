@@ -20,7 +20,7 @@ public class SystemUtil {
 			request.setCharacterEncoding("utf-8");
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 			if (isMultipart) {
-				String savePath = request.getSession().getServletContext().getRealPath("/") + "upload/";
+				String savePath = request.getSession().getServletContext().getRealPath("/") + "upload/" + userId + "/";
 				String tempPath = request.getSession().getServletContext().getRealPath("/") + "upload/temp/";
 				File saveFile = new File(savePath);
 				File tempFile = new File(tempPath);
@@ -42,8 +42,6 @@ public class SystemUtil {
 				for (FileItem item : fileItems) {
 					if (!item.isFormField()) {
 						String fileName = item.getName();
-						String fix = fileName.substring(fileName.lastIndexOf(".") + 1);
-						fileName = userId + "." + fix;
 						File file = new File(savePath + fileName);
 						item.write(file);
 						path = savePath + fileName;
@@ -58,5 +56,11 @@ public class SystemUtil {
 			e.printStackTrace();
 		}
 		return path;
+	}
+	
+	public static String changePath(String path, HttpServletRequest request){
+		String ip = request.getLocalAddr().toString();
+		String port = String.valueOf(request.getLocalPort());
+		return "http://" + ip + ":" + port + "/" + path.substring(path.lastIndexOf("QiuBaiServer"));
 	}
 }
