@@ -50,7 +50,7 @@ public class TestPictureDetailDao {
 	@Test
 	public void test1(){
 		PictureDetailDao pictureDetailDao = new PictureDetailDaoImpl();
-		List<PictureDetail> picDetails = pictureDetailDao.getPictureDetailsByid(31);
+		List<PictureDetail> picDetails = pictureDetailDao.getPictureDetailsByid(31,0,3);
 		System.out.println(picDetails.toString()+picDetails.size());
 	}
 

@@ -81,14 +81,14 @@ public class PictureDetailDaoImpl implements PictureDetailDao {
 	}
 
 	@Override
-	public List<PictureDetail> getPictureDetailsByid(int id) {
+	public List<PictureDetail> getPictureDetailsByid(int id,int offset,int rows) {
 		Connection conn = (Connection) C3P0DBConnectionPool.getConnection();
 		List<PictureDetail> pictureDetails = null;
 		try {
 
 			pictureDetails = queryRunner.query(conn,
-					ReadProperties.read("sql", "getPictureDetailById"),
-					new BeanListHandler<>(PictureDetail.class), id);
+					ReadProperties.read("sql", "getPictureDetailByIdLimit"),
+					new BeanListHandler<>(PictureDetail.class), id,offset,rows);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

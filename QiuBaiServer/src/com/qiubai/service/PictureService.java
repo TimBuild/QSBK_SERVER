@@ -49,8 +49,8 @@ public class PictureService {
 		}
 
 		return "success";
-	}
-*/
+	}*/
+
 	/**
 	 * 然后再增加PictureDetail
 	 * @return
@@ -98,12 +98,14 @@ public class PictureService {
 	}
 	
 	@POST
-	@Path("/getPictureDetails")
+	@Path("/getPictureDetailsLimit")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<PictureDetail> getPictureDetail(@FormParam("id") String id) {
+	public List<PictureDetail> getPictureDetail(@FormParam("id") String id,
+			@FormParam("offset") String offset, @FormParam("rows") String rows) {
 		List<PictureDetail> pictureDetails = pictureDetailDao
-				.getPictureDetailsByid(Integer.parseInt(id));
-		if(pictureDetails!=null){
+				.getPictureDetailsByid(Integer.parseInt(id),
+						Integer.parseInt(offset), Integer.parseInt(rows));
+		if (pictureDetails != null) {
 			pictureDetails.add(new PictureDetail());
 		}
 		return pictureDetails;

@@ -26,5 +26,5 @@ public interface PictureDetailDao {
 	 * @param id
 	 * @return
 	 */
-	public List<PictureDetail> getPictureDetailsByid(int id);
+	public List<PictureDetail> getPictureDetailsByid(int id,int offset,int rows);
 }

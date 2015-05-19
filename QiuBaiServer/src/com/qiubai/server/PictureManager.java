@@ -23,7 +23,7 @@ public class PictureManager {
 		
 		Elements contents = doc.getElementsByAttributeValue("class", "mainlist");
 		for(Element content:contents){
-			Elements element_img = content.getElementsByAttributeValue("class", "mainlist_img");
+			Elements element_img = content.getElementsByAttributeValue("class", "mainlist");
 			Elements element_img_address = element_img.get(0).getElementsByTag("img");
 			String img_address = element_img_address.get(0).attr("src").toString();
 			
